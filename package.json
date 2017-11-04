@@ -1,0 +1,28 @@
+{
+	"name": "logboom",
+	"version": "0.0.0-dev",
+	"description": "clearcut simple logging faculties for node",
+	"main": "dist/index",
+	"scripts": {
+		"prepare": "npm run build -s",
+		"build": "rimraf dist && tsc && npm test -s && echo Done production build.",
+		"start": "http-server -p 8080",
+		"test": "jest --config=jest.config.json"
+	},
+	"keywords": [],
+	"author": "Chase Moskal <chasemoskal@gmail.com>",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/chalk": "2.2.0",
+		"@types/jest": "21.1.5",
+		"@types/node": "8.0.47",
+		"@types/strip-ansi": "3.0.0",
+		"jest": "21.2.1",
+		"rimraf": "2.6.2",
+		"typescript": "2.6.1"
+	},
+	"dependencies": {
+		"chalk": "2.3.0",
+		"strip-ansi": "4.0.0"
+	}
+}
