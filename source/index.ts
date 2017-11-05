@@ -12,22 +12,22 @@ export interface Logger {
 	silly(message: string): void
 }
 
-export type Loglevel = "error" | "warn" | "info" | "verbose" | "debug" | "silly"
+export type Level = "error" | "warn" | "info" | "verbose" | "debug" | "silly"
 
 export interface LoggerMachineOptions {
-	loglevel: Loglevel
+	level: Level
 }
 
 /**
  * Logger base class, implements core logger mechanics
- *  - triage log messages based on loglevel
+ *  - triage log messages based on level
  *  - default formatting includes timestamp, can be overridden
  *  - handle errors separately from the other log messages
  *  - abstract methods require logger subclasses to persist the log
  */
 export abstract class LoggerMachine implements Logger {
 	private readonly threshold: number
-	private readonly loglevels: Loglevel[] = ["error", "warn", "info", "verbose", "debug", "silly"]
+	private readonly levels: Level[] = ["error", "warn", "info", "verbose", "debug", "silly"]
 	private readonly getLongestValue = (arr: string[]): string => {
 		let longest: string = ""
 		for (const subject of arr)
@@ -40,12 +40,12 @@ export abstract class LoggerMachine implements Logger {
 		return subject
 	}
 
-	protected getLoglevelNumber(loglevel: Loglevel): number {
-		return this.loglevels.indexOf(<Loglevel>loglevel.toLowerCase())
+	protected getLevelNumber(level: Level): number {
+		return this.levels.indexOf(<Level>level.toLowerCase())
 	}
 
-	constructor({loglevel}: LoggerMachineOptions) {
-		this.threshold = this.getLoglevelNumber(loglevel)
+	constructor({level}: LoggerMachineOptions) {
+		this.threshold = this.getLevelNumber(level)
 	}
 
 	abstract logErrorMessage(errorMessage: string): void
@@ -55,21 +55,21 @@ export abstract class LoggerMachine implements Logger {
 		return `[${new Date().toISOString()}] `
 	}
 
-	protected loglevelTag(loglevel: Loglevel) {
-		return this.rpad(`(${loglevel.toUpperCase()}) `, 3 + this.getLongestValue(this.loglevels).length)
+	protected levelTag(level: Level) {
+		return this.rpad(`(${level.toUpperCase()}) `, 3 + this.getLongestValue(this.levels).length)
 	}
 
 	protected formatError(error: Error): string {
-		return this.timestamp() + this.loglevelTag("error") + error.stack
+		return this.timestamp() + this.levelTag("error") + error.stack
 	}
 
-	protected formatMessage(loglevel: Loglevel, message: string): string {
-		return this.timestamp() + this.loglevelTag(loglevel) + message
+	protected formatMessage(level: Level, message: string): string {
+		return this.timestamp() + this.levelTag(level) + message
 	}
 
-	private reportMessage(loglevel: Loglevel, message: string): void {
-		if (this.getLoglevelNumber(loglevel) <= this.threshold)
-			this.logMessage(this.formatMessage(loglevel, message))
+	private reportMessage(level: Level, message: string): void {
+		if (this.getLevelNumber(level) <= this.threshold)
+			this.logMessage(this.formatMessage(level, message))
 	}
 
 	error(error: Error) { this.logErrorMessage(this.formatError(error)) }
@@ -87,13 +87,13 @@ export class ConsoleLogger extends LoggerMachine {
 	private readonly colors: string[] = ["red", "magenta", "cyan", "green", "blue", "gray"]
 
 	protected formatError(error: Error): string {
-		return chalk.yellow(this.timestamp()) + chalk.red(this.loglevelTag("error") + error.stack)
+		return chalk.yellow(this.timestamp()) + chalk.red(this.levelTag("error") + error.stack)
 	}
 
-	protected formatMessage(loglevel: Loglevel, message: string): string {
-		const color = this.colors[this.getLoglevelNumber(loglevel)]
+	protected formatMessage(level: Level, message: string): string {
+		const color = this.colors[this.getLevelNumber(level)]
 		const chalkFunction: (s: string) => string = (<any>chalk)[color]
-		return chalk.yellow(this.timestamp()) + chalkFunction(this.loglevelTag(loglevel) + message)
+		return chalk.yellow(this.timestamp()) + chalkFunction(this.levelTag(level) + message)
 	}
 
 	logErrorMessage(errorMessage: string) {
@@ -120,17 +120,18 @@ export class FileLogger extends ConsoleLogger {
 
 	constructor({logfile, eol = "\n", ...options}: FileLoggerOptions) {
 		super(options)
-		this.stream = createWriteStream(logfile, {flags: "a"})
 		this.eol = eol
+		this.stream = createWriteStream(logfile, {flags: "a"})
+		this.stream.write(eol)
 	}
 
 	logErrorMessage(errorMessage: string) {
 		super.logErrorMessage(errorMessage)
-		this.stream.write(this.eol + stripAnsi(errorMessage))
+		this.stream.write(stripAnsi(errorMessage) + this.eol)
 	}
 
 	logMessage(message: string) {
 		super.logMessage(message)
-		this.stream.write(this.eol + stripAnsi(message))
+		this.stream.write(stripAnsi(message) + this.eol)
 	}
 }
