@@ -1,7 +1,7 @@
 
-import {ConsoleLogger} from "./index"
+import {FileLogger} from "./index"
 
-const logger = new ConsoleLogger({loglevel: "silly"})
+const logger = new FileLogger({level: "silly", logfile: "example.log"})
 
 logger.error(new Error("example error occurred"))
 logger.warn("heed my warning")
