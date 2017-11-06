@@ -1,7 +1,5 @@
 
-logboom
-=======
-
+# logboom — [![Build Status](https://travis-ci.org/team-enceladus/logboom.svg?branch=master)](https://travis-ci.org/team-enceladus/logboom)
 ## clearcut simple node logging
 
 1. **install logboom locally** — `npm install logboom`
