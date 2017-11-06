@@ -9,7 +9,21 @@
 			"taskName": "install",
 			"args": ["install", "--silent"],
 			"isBuildCommand": true,
-			"problemMatcher": ["$tsc"]
+			"problemMatcher": [
+				"$tsc",
+				{
+					"owner": "tslint",
+					"fileLocation": ["relative", "${workspaceFolder}"],
+					"pattern": {
+						"regexp": "^(WARNING|ERROR):(\\s+\\(\\S*\\))?\\s+(\\S.*)\\[(\\d+), (\\d+)\\]:\\s+(.*)$",
+						"severity": 1,
+						"file": 3,
+						"line": 4,
+						"column": 5,
+						"message": 6
+					}
+				}
+			]
 		}
 	]
 }
