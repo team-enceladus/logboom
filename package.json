@@ -1,7 +1,7 @@
 {
 	"name": "logboom",
-	"version": "0.0.0-dev",
-	"description": "clearcut simple logging faculties for node",
+	"version": "0.0.0",
+	"description": "clearcut simple node logging",
 	"main": "dist/logboom",
 	"types": "dist/logboom.d.ts",
 	"scripts": {
