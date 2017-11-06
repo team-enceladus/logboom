@@ -1,5 +1,5 @@
 
-import {FileLogger} from "./index"
+import {FileLogger} from "./logboom"
 
 const logger = new FileLogger({logfile: "example.log", level: "silly"})
 
