@@ -25,7 +25,7 @@
 
 4. **voila! color-coded console output**
 
-	![logboom colored console output](example.png)
+	![logboom colored console output](https://github.com/team-enceladus/logboom/blob/master/example.png?raw=true)
 
 5. **you also get a color-free `example.log` text file**
 
