@@ -5,7 +5,8 @@
 	"main": "dist/index",
 	"scripts": {
 		"prepare": "npm run build -s",
-		"build": "rimraf dist && tsc && npm test -s && echo Done production build.",
+		"build": "rimraf dist && tsc && npm run lint -s -- --fix && npm test -s && echo done build",
+		"lint": "tslint 'source/**/*.ts' --config tslint.json",
 		"start": "http-server -p 8080",
 		"test": "jest --config=jest.config.json"
 	},
@@ -19,6 +20,7 @@
 		"@types/strip-ansi": "3.0.0",
 		"jest": "21.2.1",
 		"rimraf": "2.6.2",
+		"tslint": "5.8.0",
 		"typescript": "2.6.1"
 	},
 	"dependencies": {

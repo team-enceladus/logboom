@@ -1,0 +1,16 @@
+{
+	"rules": {
+		"indent": [true, "tabs", 2],
+		"semicolon": [true, "never"],
+		"quotemark": [true, "double"],
+		"prefer-const": true,
+		"variable-name": [true, "ban-keywords", "check-format", "allow-snake-case"],
+		"no-consecutive-blank-lines": true,
+		"no-irregular-whitespace": true,
+		"whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-rest-spread", "check-type", "check-type-operator", "check-preblock"],
+		"max-line-length": [true, 120],
+		"trailing-comma": [true, {"multiline": "never", "singleline": "never", "esSpecCompliant": true}],
+		"interface-name": [true, "never-prefix"],
+		"space-before-function-paren": [true, "never"]
+	}
+}
