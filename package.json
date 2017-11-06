@@ -2,7 +2,8 @@
 	"name": "logboom",
 	"version": "0.0.0-dev",
 	"description": "clearcut simple logging faculties for node",
-	"main": "dist/index",
+	"main": "dist/logboom",
+	"types": "dist/logboom.d.ts",
 	"scripts": {
 		"prepare": "npm run build -s",
 		"build": "rimraf dist && tsc && npm run lint -s -- --fix && npm test -s && echo done build",
