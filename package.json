@@ -11,9 +11,23 @@
 		"start": "http-server -p 8080",
 		"test": "jest --config=jest.config.json"
 	},
-	"keywords": [],
+	"keywords": [
+		"logging",
+		"typescript"
+	],
 	"author": "Chase Moskal <chasemoskal@gmail.com>",
 	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/team-enceladus/logboom.git"
+	},
+	"bugs": {
+		"url": "https://github.com/team-enceladus/logboom/issues"
+	},
+	"dependencies": {
+		"chalk": "2.3.0",
+		"strip-ansi": "4.0.0"
+	},
 	"devDependencies": {
 		"@types/chalk": "2.2.0",
 		"@types/jest": "21.1.5",
@@ -23,9 +37,5 @@
 		"rimraf": "2.6.2",
 		"tslint": "5.8.0",
 		"typescript": "2.6.1"
-	},
-	"dependencies": {
-		"chalk": "2.3.0",
-		"strip-ansi": "4.0.0"
 	}
 }
